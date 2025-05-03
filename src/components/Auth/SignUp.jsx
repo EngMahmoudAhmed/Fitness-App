@@ -1,78 +1,109 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
+import { User, Mail, Lock, Loader2 } from 'lucide-react'
 
 export const SignUp = () => {
+  const [isLoading, setIsLoading] = useState(false)
   const { 
     register,
     handleSubmit,
     formState: { errors },
   } = useForm()
 
-  const onSubmit = (data) => {
-    console.log('Form submitted', data)
+  const onSubmit = async (data) => {
+    setIsLoading(true)
+    try {
+      console.log('Form submitted', data)
+      // Add your signup logic here
+      await new Promise(resolve => setTimeout(resolve, 1000))
+    } finally {
+      setIsLoading(false)
+    }  
   }
 
   return (<>
-    <section className='p-10 w-fit border-gray-500 mx-auto '>
-      {/* <h1 className='font-bold text-4xl text-center  p-10 tracking-wide poppins-bold text-black'>Sign Up</h1> */}
-      <div className='w-xl mx-auto bg-cyan-950 text-amber-50 p-7 rounded-lg'>
-        <h2 className='font-bold text-2xl text-center pb-5'>Create an Account</h2>
+    <section className='min-h-screen flex items-center justify-center p-4 bg-gray-50'>
+      <div className='w-full max-w-2xl bg-white shadow-xl rounded-2xl p-4 sm:p-6 md:p-8'>
+        <h2 className='font-bold text-2xl sm:text-3xl text-gray-900 text-center mb-4 sm:mb-6'>Create an Account</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className='flex justify-between items-center text-white'>
-            <div>
-              <label className='flex ' htmlFor="uerName">First Name</label>
-              <input 
-                type="text"
-                className='w-full p-3 mt-2 border border-gray-300 rounded-lg mb-4 text-amber-100'
-                id='userName'
-                placeholder='Enter your username'
-                {...register('firstName', { required: 'First Name is required' })}
-              />
-              {errors.firstName && <p className="text-red-500 text-xs mt-1">{errors.firstName.message}</p>}
+          <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
+            <div className='relative'>
+              <label className='block text-sm font-medium text-gray-700 mb-1' htmlFor="userName">First Name</label>
+              <div className='relative'>
+                <User className='absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-5 w-5' />
+                <input 
+                  type="text"
+                  className='w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-400 transition-colors'
+                  id='userName'
+                  placeholder='Enter your first name'
+                  {...register('firstName', { required: 'First Name is required' })}
+                />
+              </div>
+              {errors.firstName && <p className="text-red-500 text-sm mt-1">{errors.firstName.message}</p>}
             </div>
 
-            <div>
-              <label className='flex ' htmlFor="LastName">Last Name</label>
-              <input 
-                type="text"
-                className='w-full p-3 mt-2 border border-gray-300 rounded-lg mb-4 text-amber-100'
-                id='LastName'
-                placeholder='Enter your Last Name'
-                {...register('lastName', { required: 'Last Name is required' })}
-              />
-              {errors.lastName && <p className="text-red-500 text-xs mt-1">{errors.lastName.message}</p>}
+            <div className='relative'>
+              <label className='block text-sm font-medium text-gray-700 mb-1' htmlFor="LastName">Last Name</label>
+              <div className='relative'>
+                <User className='absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-5 w-5' />
+                <input 
+                  type="text"
+                  className='w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-400 transition-colors'
+                  id='LastName'
+                  placeholder='Enter your last name'
+                  {...register('lastName', { required: 'Last Name is required' })}
+                />
+              </div>
+              {errors.lastName && <p className="text-red-500 text-sm mt-1">{errors.lastName.message}</p>}
             </div>
           </div>
 
-          <div className='flex justify-between items-center text-white'>
-            <div>
-              <label className='flex ' htmlFor="Email">Email</label>
-              <input
-                type="email"
-                className='w-full p-3 mt-2 border border-gray-300 rounded-lg mb-4 text-amber-100'
-                id='Email'
-                placeholder='Enter your Email'
-                {...register('email', { required: 'Email is required', pattern: { value: /^\S+@\S+$/i, message: 'Invalid email address' } })}
-              />
-              {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
+          <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4'>
+            <div className='relative'>
+              <label className='block text-sm font-medium text-gray-700 mb-1' htmlFor="Email">Email</label>
+              <div className='relative'>
+                <Mail className='absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-5 w-5' />
+                <input
+                  type="email"
+                  className='w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-400 transition-colors'
+                  id='Email'
+                  placeholder='Enter your email'
+                  {...register('email', { required: 'Email is required', pattern: { value: /^\S+@\S+$/i, message: 'Invalid email address' } })}
+                />
+              </div>
+              {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
             </div>
-            <div>
-              <label className='flex ' htmlFor="Password">Password</label>
-              <input type="text"
-                className='w-full p-3 mt-2 border border-gray-300 rounded-lg mb-4 text-amber-100'
-                id='Password'
-                {...register('password', { required: 'Password is required', minLength: { value: 6, message: 'Password must be at least 6 characters' } })}
-                placeholder='Enter your Password'
-              />
-              {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>}
+            <div className='relative'>
+              <label className='block text-sm font-medium text-gray-700 mb-1' htmlFor="Password">Password</label>
+              <div className='relative'>
+                <Lock className='absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-5 w-5' />
+                <input 
+                  type="password"
+                  className='w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-400 transition-colors'
+                  id='Password'
+                  placeholder='Enter your password'
+                  {...register('password', { required: 'Password is required', minLength: { value: 6, message: 'Password must be at least 6 characters' } })}
+                />
+              </div>
+              {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
             </div>
           </div>
-          <div>
-            <button type='submit' className='bg-teal-700 hover:bg-teal-500 cursor-pointer w-full rounded-3xl border-none p-2'>Sign Up</button>
-            <p className="p-1 text-md flex justify-end text-gray-500 sm:mt-0 ">
-              Already have an account?
-              <Link to='/login' href="#" className="text-gray-300 underline">Login</Link>.
+          <div className='mt-6 space-y-4'>
+            <button 
+              type='submit' 
+              disabled={isLoading}
+              className='cursor-pointer flex items-center justify-center w-full px-3 sm:px-4 py-2.5 sm:py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base'>
+              {isLoading ? (
+                <>
+                  <Loader2 className='animate-spin -ml-1 mr-2 h-5 w-5' />
+                  Processing...
+                </>
+              ) : 'Sign Up'}
+            </button>
+            <p className="text-sm text-center text-gray-600">
+              Already have an account?{' '}
+              <Link to='/login' className="text-blue-600 hover:text-blue-700 font-medium">Login</Link>
             </p>
           </div>
         </form>
