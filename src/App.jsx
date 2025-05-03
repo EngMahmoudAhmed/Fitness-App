@@ -5,6 +5,7 @@ import { Login } from './components/Auth/Login'
 import Home from './components/Home'
 import Courses from './components/Courses'
 import Store from './components/Store'
+import AboutUs from './components/AboutUs'
 import { Navbar } from './components/Navbar'
 import { BrowserRouter as Router, Route, } from 'react-router-dom'
 import { ForgetPasswordForm } from './components/Auth/ForgetPasswordForm'
@@ -19,6 +20,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="courses" element={<Courses />} />
         <Route path="store" element={<Store />} />
+        <Route path="aboutus" element={<AboutUs />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forget-password" element={<ForgetPasswordForm />} />

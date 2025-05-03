@@ -58,7 +58,7 @@ export const Navbar = () => {
                                 <li>
                                     <Link
                                         className="text-gray-700 transition hover:text-teal-500"
-                                        to="/about"
+                                        to="/aboutus"
                                     >
                                         About Us
                                     </Link>
