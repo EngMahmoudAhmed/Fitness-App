@@ -10,6 +10,7 @@ import { Navbar } from './components/Navbar'
 import { BrowserRouter as Router, Route, } from 'react-router-dom'
 import { ForgetPasswordForm } from './components/Auth/ForgetPasswordForm'
 import { Footer } from './components/Footer'
+import Services from './components/Services'
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
         <Route path="courses" element={<Courses />} />
         <Route path="store" element={<Store />} />
         <Route path="aboutus" element={<AboutUs />} />
+        <Route path="services" element={<Services />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forget-password" element={<ForgetPasswordForm />} />

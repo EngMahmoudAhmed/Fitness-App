@@ -1,19 +1,46 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
+
+    // Handle scroll effect
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 10) {
+                setScrolled(true);
+            } else {
+                setScrolled(false);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
+    
+    // Close menu when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (isMenuOpen && !event.target.closest('.mobile-menu-container')) {
+                setIsMenuOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, [isMenuOpen]);
 
     return (
         <>
-            <header className="shadow-md relative bg-white">
+            <header className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'shadow-md bg-white/95 backdrop-blur-sm' : 'bg-white'}`}>
                 <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
                     <div className="flex h-16 items-center justify-between">
-                        <div className="flex items-center cursor-pointer">
+                        <div className="flex items-center cursor-pointer transition-transform hover:scale-105">
                             <Link to="/">
                                 <h2 className="font-bold text-2xl">
                                     Royal <span className="text-teal-600">Fitness</span>
@@ -67,9 +94,9 @@ export const Navbar = () => {
                         </nav>
 
                         <div className="flex items-center gap-4">
-                            <div className="sm:flex sm:gap-4">
+                            <div className="hidden sm:flex sm:gap-4">
                                 <Link
-                                    className="rounded-3xl bg-teal-600 hover:bg-teal-800 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-colors duration-200"
+                                    className="rounded-3xl bg-teal-600 hover:bg-teal-800 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
                                     to="/signup"
                                 >
                                     Chat With AI
@@ -77,7 +104,7 @@ export const Navbar = () => {
                             </div>
 
                             <button
-                                className="block md:hidden rounded-lg bg-gray-100 p-2.5 text-gray-600 transition hover:text-gray-600/75"
+                                className="cursor-pointer block md:hidden rounded-lg bg-gray-100 p-2.5 text-gray-600 transition hover:text-gray-600/75"
                                 onClick={toggleMenu}
                             >
                                 <span className="sr-only">Toggle menu</span>
@@ -101,7 +128,7 @@ export const Navbar = () => {
 
                     {/* Mobile Menu */}
                     <div
-                        className={`md:hidden ${isMenuOpen ? 'block' : 'hidden'} absolute left-0 right-0 top-16 bg-white shadow-lg z-50 transition-all duration-300 ease-in-out`}
+                        className={`md:hidden mobile-menu-container ${isMenuOpen ? 'block' : 'hidden'} absolute left-0 right-0 top-16 bg-white shadow-lg z-50 transition-all duration-300 ease-in-out`}
                     >
                         <nav className="px-4 py-3">
                             <ul className="space-y-3">
@@ -143,7 +170,7 @@ export const Navbar = () => {
                                 </li>
                                 <li>
                                     <Link
-                                        to="/about"
+                                        to="/aboutus"
                                         className="block text-gray-700 hover:text-teal-500 transition"
                                         onClick={() => setIsMenuOpen(false)}
                                     >
@@ -151,10 +178,23 @@ export const Navbar = () => {
                                     </Link>
                                 </li>
                             </ul>
+                            
+                            {/* Mobile Button */}
+                            <div className="mt-4 pb-2">
+                                <Link
+                                    to="/signup"
+                                    className="block w-full text-center rounded-3xl bg-teal-600 hover:bg-teal-800 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-all duration-200"
+                                    onClick={() => setIsMenuOpen(false)}
+                                >
+                                    Chat With AI
+                                </Link>
+                            </div>
                         </nav>
                     </div>
                 </div>
             </header>
+            {/* Spacer for fixed header */}
+            <div className="h-16"></div>
         </>
     );
 };
