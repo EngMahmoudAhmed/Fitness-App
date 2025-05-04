@@ -63,7 +63,7 @@ const Services = () => {
                                 </p>
                             </div>
                             <div className="bg-gray-700 py-4 px-8 group-hover:bg-teal-800 transition-colors duration-300">
-                                <button className="w-full text-white font-medium text-center">Learn More</button>
+                                <button className="w-full text-white font-medium cursor-pointer text-center">Learn More</button>
                             </div>
                         </div>
                     ))}
