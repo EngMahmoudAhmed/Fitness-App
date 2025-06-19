@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import gym1 from '../assets/gym1.jpg'
-import gym2 from '../assets/gym2.jpg'
+import gym1 from '../assets/Gym1.jpg'
+import gym2 from '../assets/Gym2.jpg'
 import Cart from './Cart'
 import { ShoppingCart } from 'lucide-react'
 
