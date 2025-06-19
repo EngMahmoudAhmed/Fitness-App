@@ -11,6 +11,8 @@ import { BrowserRouter as Router, Route, } from 'react-router-dom'
 import { ForgetPasswordForm } from './components/Auth/ForgetPasswordForm'
 import { Footer } from './components/Footer'
 import Services from './components/Services'
+import Profile from './components/Profile'
+import ChatAI from './components/ChatAI'
 
 function App() {
 
@@ -23,9 +25,11 @@ function App() {
         <Route path="store" element={<Store />} />
         <Route path="aboutus" element={<AboutUs />} />
         <Route path="services" element={<Services />} />
+        <Route path="profile" element={<Profile />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forget-password" element={<ForgetPasswordForm />} />
+        <Route path="/chat" element={<ChatAI />} />
       </Routes>
       <Footer />
     </BrowserRouter>

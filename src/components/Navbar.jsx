@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 export const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
+    const location = window.location.pathname;
+    const isAuthRoute = ["/login", "/signup", "/forget-password"].includes(location);
 
     // Handle scroll effect
     useEffect(() => {
@@ -94,14 +96,16 @@ export const Navbar = () => {
                         </nav>
 
                         <div className="flex items-center gap-4">
-                            <div className="hidden sm:flex sm:gap-4">
-                                <Link
-                                    className="rounded-3xl bg-teal-600 hover:bg-teal-800 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
-                                    to="/signup"
-                                >
-                                    Chat With AI
-                                </Link>
-                            </div>
+                            {!isAuthRoute && (
+                                <div className="hidden sm:flex sm:gap-4">
+                                    <Link
+                                        className="rounded-3xl bg-teal-600 hover:bg-teal-800 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
+                                        to="/chat"
+                                    >
+                                        Chat With AI
+                                    </Link>
+                                </div>
+                            )}
 
                             <button
                                 className="cursor-pointer block md:hidden rounded-lg bg-gray-100 p-2.5 text-gray-600 transition hover:text-gray-600/75"
@@ -180,15 +184,17 @@ export const Navbar = () => {
                             </ul>
                             
                             {/* Mobile Button */}
-                            <div className="mt-4 pb-2">
-                                <Link
-                                    to="/signup"
-                                    className="block w-full text-center rounded-3xl bg-teal-600 hover:bg-teal-800 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-all duration-200"
-                                    onClick={() => setIsMenuOpen(false)}
-                                >
-                                    Chat With AI
-                                </Link>
-                            </div>
+                            {!isAuthRoute && (
+                                <div className="mt-4 pb-2">
+                                    <Link
+                                        to="/chat"
+                                        className="block w-full text-center rounded-3xl bg-teal-600 hover:bg-teal-800 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-all duration-200"
+                                        onClick={() => setIsMenuOpen(false)}
+                                    >
+                                        Chat With AI
+                                    </Link>
+                                </div>
+                            )}
                         </nav>
                     </div>
                 </div>
