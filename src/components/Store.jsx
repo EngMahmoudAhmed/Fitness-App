@@ -1,19 +1,41 @@
-import React from 'react'
+import { useState } from 'react'
+import gym1 from '../assets/gym1.jpg'
+import gym2 from '../assets/gym2.jpg'
+import Cart from './Cart'
+import { ShoppingCart } from 'lucide-react'
 
 const Store = () => {
+    const [isCartOpen, setIsCartOpen] = useState(false);
+    const [cartItems, setCartItems] = useState([]);
+
+    const addToCart = (product) => {
+        setCartItems(prev => {
+            const existingItem = prev.find(item => item.id === product.id);
+            if (existingItem) {
+                return prev.map(item =>
+                    item.id === product.id
+                        ? { ...item, quantity: item.quantity + 1 }
+                        : item
+                );
+            }
+            return [...prev, { ...product, quantity: 1 }];
+        });
+        setIsCartOpen(true);
+    };
     const products = [
         {
             id: 1,
             name: "Premium Yoga Mat",
             price: 29.99,
-            image: "https://images.unsplash.com/photo-1593810450967-f9c42742e326?q=80&w=1470&auto=format&fit=crop",
+            image: gym1,
+            // image: "https://images.unsplash.com/photo-1593810450967-f9c42742e326?q=80&w=1470&auto=format&fit=crop",
             description: "High-quality, non-slip yoga mat perfect for all types of exercises"
         },
         {
             id: 2,
             name: "Resistance Bands Set",
             price: 24.99,
-            image: "https://images.unsplash.com/photo-1598268030450-7b494e85d3c7?q=80&w=1470&auto=format&fit=crop",
+            image: gym2,
             description: "Set of 5 resistance bands with different tension levels"
         },
         {
@@ -42,7 +64,7 @@ const Store = () => {
             name: "Exercise Ball",
             price: 19.99,
             image: "https://images.unsplash.com/photo-1593476087123-36d1de271f08?q=80&w=1470&auto=format&fit=crop",
-            description: "Multi-purpose exercise ball for core strength and stability"
+            description: "Multi-purpose exercise ball for core strength and .."
         },
         {
             id: 7,
@@ -63,13 +85,22 @@ const Store = () => {
             name: "Exercise Ball",
             price: 19.99,
             image: "https://images.unsplash.com/photo-1593476087123-36d1de271f08?q=80&w=1470&auto=format&fit=crop",
-            description: "Multi-purpose exercise ball for core strength and stability"
+            description: "Multi-purpose exercise ball for core strength and .."
         },
     ];
 
     return (
-        <div className="container mx-auto px-4 py-8">
-            <h1 className="text-3xl font-bold text-center mb-8">Fitness Equipment Store</h1>
+        <div className="container mx-auto px-4 py-8 relative">
+            <div className="flex justify-between items-center mb-8">
+                <h1 className="text-3xl font-bold">Fitness Equipment Store</h1>
+                <button
+                    onClick={() => setIsCartOpen(true)}
+                    className="flex items-center gap-2 bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition-colors"
+                >
+                    <ShoppingCart className="w-5 h-5" />
+                    <span>View Cart</span>
+                </button>
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {products.map((product) => (
                     <div key={product.id} className="bg-white rounded-lg shadow-md overflow-hidden">
@@ -83,7 +114,10 @@ const Store = () => {
                             <p className="text-gray-600 mb-2">{product.description}</p>
                             <div className="flex justify-between items-center">
                                 <span className="text-xl font-bold text-teal-600">${product.price}</span>
-                                <button className="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700 transition">
+                                <button 
+                                    onClick={() => addToCart(product)}
+                                    className="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700 transition"
+                                >
                                     Add to Cart
                                 </button>
                             </div>
@@ -91,6 +125,12 @@ const Store = () => {
                     </div>
                 ))}
             </div>
+            <Cart 
+                isOpen={isCartOpen} 
+                onClose={() => setIsCartOpen(false)}
+                cartItems={cartItems}
+                setCartItems={setCartItems}
+            />
         </div>
     )
 }
