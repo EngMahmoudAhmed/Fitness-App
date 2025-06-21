@@ -43,7 +43,7 @@ export default function ChatAI() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-4">
+    <div className="min-h-screen bg-gray-950 text-white p-4">
       <div className="max-w-4xl mx-auto">
         {/* Chat Messages */}
         <div className="space-y-6 mb-8">

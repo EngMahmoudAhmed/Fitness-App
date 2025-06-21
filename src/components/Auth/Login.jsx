@@ -70,6 +70,8 @@ export const Login = () => {
                         </button>
                         <p className="text-sm text-center text-gray-600">
                             <Link to='/forget-password' className="text-blue-600 hover:text-blue-700 font-medium">Forgot your password?</Link>
+                            <span className='px-2 text-gray-400'>|</span>
+                            <Link to='/signup' className="text-blue-600 hover:text-blue-700 font-medium">Sign up</Link>
                         </p>
                     </div>
                 </form>

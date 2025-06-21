@@ -20,7 +20,7 @@ const Store = () => {
             }
             return [...prev, { ...product, quantity: 1 }];
         });
-        setIsCartOpen(true);
+        setTimeout(() => setIsCartOpen(true), 0);
     };
     const products = [
         {

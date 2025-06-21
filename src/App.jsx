@@ -13,6 +13,8 @@ import { Footer } from './components/Footer'
 import Services from './components/Services'
 import Profile from './components/Profile'
 import ChatAI from './components/ChatAI'
+import NotFound from './components/NotFound'
+import Dashboard from './components/Dashboard'
 
 function App() {
 
@@ -30,6 +32,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/forget-password" element={<ForgetPasswordForm />} />
         <Route path="/chat" element={<ChatAI />} />
+        {/* <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} /> */}
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
     </BrowserRouter>
