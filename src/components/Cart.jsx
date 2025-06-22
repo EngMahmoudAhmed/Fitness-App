@@ -1,7 +1,8 @@
-// import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { X, Plus, Minus, ShoppingCart } from 'lucide-react';
 
 const Cart = ({ isOpen, onClose, cartItems, setCartItems }) => {
+    const navigate = useNavigate();
 
     const removeFromCart = (productId) => {
         setCartItems(prev => prev.filter(item => item.id !== productId));
@@ -87,6 +88,10 @@ const Cart = ({ isOpen, onClose, cartItems, setCartItems }) => {
                     <button
                         className="w-full bg-teal-600 text-white py-3 rounded-lg font-medium hover:bg-teal-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                         disabled={cartItems.length === 0}
+                        onClick={() => {
+                            onClose();
+                            navigate('/payment');
+                        }}
                     >
                         Checkout (${total.toFixed(2)})
                     </button>

@@ -11,12 +11,12 @@ import { BrowserRouter as Router, Route, } from 'react-router-dom'
 import { ForgetPasswordForm } from './components/Auth/ForgetPasswordForm'
 import { Footer } from './components/Footer'
 import Services from './components/Services'
-import Profile from './components/Profile'
 import ChatAI from './components/ChatAI'
 import NotFound from './components/NotFound'
 import Dashboard from './components/Dashboard'
 import Trainers from './components/Trainers'
 import TrainerProfile from './components/TrainerProfile'
+import Payment from './components/Payment'
 
 function App() {
 
@@ -29,7 +29,6 @@ function App() {
         <Route path="store" element={<Store />} />
         <Route path="aboutus" element={<AboutUs />} />
         <Route path="services" element={<Services />} />
-        <Route path="profile" element={<Profile />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forget-password" element={<ForgetPasswordForm />} />
@@ -38,6 +37,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/trainers" element={<Trainers />} />
         <Route path="/trainer/:id" element={<TrainerProfile />} />
+        <Route path="/payment" element={<Payment />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
