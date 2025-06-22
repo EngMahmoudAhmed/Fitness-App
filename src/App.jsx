@@ -15,6 +15,8 @@ import Profile from './components/Profile'
 import ChatAI from './components/ChatAI'
 import NotFound from './components/NotFound'
 import Dashboard from './components/Dashboard'
+import Trainers from './components/Trainers'
+import TrainerProfile from './components/TrainerProfile'
 
 function App() {
 
@@ -34,6 +36,8 @@ function App() {
         <Route path="/chat" element={<ChatAI />} />
         {/* <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} /> */}
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/trainers" element={<Trainers />} />
+        <Route path="/trainer/:id" element={<TrainerProfile />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

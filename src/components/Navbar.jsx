@@ -95,6 +95,14 @@ export const Navbar = () => {
                                 <li>
                                     <Link
                                         className="text-gray-700 transition hover:text-teal-500"
+                                        to="/trainers"
+                                    >
+                                        Trainers
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        className="text-gray-700 transition hover:text-teal-500"
                                         to="/dashboard"
                                     >
                                         Dashboard
@@ -187,6 +195,15 @@ export const Navbar = () => {
                                         onClick={() => setIsMenuOpen(false)}
                                     >
                                         About Us
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        to="/trainers"
+                                        className="block text-gray-700 hover:text-teal-500 transition"
+                                        onClick={() => setIsMenuOpen(false)}
+                                    >
+                                        Trainers
                                     </Link>
                                 </li>
                                 <li>
