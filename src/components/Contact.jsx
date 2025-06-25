@@ -91,7 +91,8 @@ const Contact = () => {
 
                             <button
                                 type="submit"
-                                className="w-full flex items-center justify-center px-6 py-3 bg-teal-500 text-white font-semibold rounded-lg hover:bg-teal-600 transition-colors duration-300"
+                                className="cursor-pointer w-full flex items-center justify-center px-6 py-3 bg-teal-500 text-white font-semibold rounded-lg hover:bg-teal-600 transition-colors duration-300"
+
                             >
                                 <Send className="w-5 h-5 mr-2" />
                                 Send Message

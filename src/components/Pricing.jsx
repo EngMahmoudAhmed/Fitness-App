@@ -78,7 +78,7 @@ const Pricing = () => {
                             </ul>
                             <Link to="/signup" className="block">
                                 <button 
-                                    className={`w-full py-3 px-6 rounded-xl font-semibold transition-colors duration-200 ${plan.highlighted ? 'bg-white text-teal-500 hover:bg-gray-100' : 'bg-teal-500 text-white hover:bg-teal-600'}`}
+                                    className={`cursor-pointer w-full py-3 px-6 rounded-xl font-semibold transition-colors duration-200 ${plan.highlighted ? 'bg-white text-teal-500 hover:bg-gray-100' : 'bg-teal-500 text-white hover:bg-teal-600'}`}
                                 >
                                     {plan.buttonText}
                                 </button>

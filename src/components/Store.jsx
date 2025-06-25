@@ -95,7 +95,7 @@ const Store = () => {
                 <h1 className="text-3xl font-bold">Fitness Equipment Store</h1>
                 <button
                     onClick={() => setIsCartOpen(true)}
-                    className="flex items-center gap-2 bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition-colors"
+                    className="cursor-pointer flex items-center gap-2 bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition-colors"
                 >
                     <ShoppingCart className="w-5 h-5" />
                     <span>View Cart</span>
@@ -116,7 +116,7 @@ const Store = () => {
                                 <span className="text-xl font-bold text-teal-600">${product.price}</span>
                                 <button 
                                     onClick={() => addToCart(product)}
-                                    className="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700 transition"
+                                    className="cursor-pointer bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700 transition"
                                 >
                                     Add to Cart
                                 </button>

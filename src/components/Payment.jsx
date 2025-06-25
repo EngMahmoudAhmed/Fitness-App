@@ -12,7 +12,7 @@ const Payment = () => {
     <div className="min-h-screen bg-black p-4 md:p-8">
       <div className="max-w-2xl mx-auto bg-gray-900 rounded-2xl p-6 md:p-8">
         <div className="flex items-center mb-6">
-          <Link to="/cart" className="text-teal-500 hover:text-teal-400 flex items-center">
+          <Link to="/store" className="text-teal-500 hover:text-teal-400 flex items-center">
             <ArrowLeft className="w-5 h-5 mr-2" />
             Back
           </Link>
@@ -76,12 +76,12 @@ const Payment = () => {
           {/* Payment Methods Section */}
           <div>
             <h3 className="text-white text-lg font-semibold mb-4">Payment methods</h3>
-            <div className="flex space-x-4">
-              <img src="/src/assets/visa.png" alt="Visa" className="h-8 w-auto" />
-              <img src="/src/assets/mastercard.png" alt="Mastercard" className="h-8 w-auto" />
-              <img src="/src/assets/paypal.png" alt="PayPal" className="h-8 w-auto" />
-              <img src="/src/assets/applepay.png" alt="Apple Pay" className="h-8 w-auto" />
-              <img src="/src/assets/googlepay.png" alt="Google Pay" className="h-8 w-auto" />
+            <div className="flex space-x-4 cursor-pointer">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" className="h-8 w-auto" />
+              <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" className="h-8 w-auto" />
+              <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal" className="h-8 w-auto" />
+              <img src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Apple_Pay_logo.svg" alt="Apple Pay" className="h-8 w-auto" />
+              <img src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Google_Pay_Logo.svg" alt="Google Pay" className="h-8 w-auto" />
             </div>
           </div>
 
@@ -132,7 +132,7 @@ const Payment = () => {
 
           <button
             type="submit"
-            className="w-full bg-teal-500 hover:bg-teal-600 text-white font-semibold py-3 rounded-lg transition duration-300"
+            className="w-full bg-teal-500 hover:bg-teal-600 text-white font-semibold py-3 rounded-lg transition duration-300 cursor-pointer"
           >
             Pay now
           </button>

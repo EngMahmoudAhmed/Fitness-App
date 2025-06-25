@@ -3,9 +3,12 @@ import { BarChart3, Activity, Users, DollarSign, TrendingUp, Calendar, Settings,
 
 const Dashboard = () => {
     const [showAddProductModal, setShowAddProductModal] = useState(false);
+    const [showEditProductModal, setShowEditProductModal] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState(null);
     const [showAddOrderModal, setShowAddOrderModal] = useState(false);
     const [showEditOrderModal, setShowEditOrderModal] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState(null);
+    const [filterStatus, setFilterStatus] = useState('all');
     const [orders, setOrders] = useState([
         { id: '#ORD-001', customer: 'John Doe', products: 'Protein Powder, Pre-Workout', total: '$64.98', date: '2024-01-15', status: 'Completed' },
         { id: '#ORD-002', customer: 'Jane Smith', products: 'Resistance Band Set', total: '$19.99', date: '2024-01-16', status: 'Processing' },
@@ -208,7 +211,7 @@ const Dashboard = () => {
                     <h2 className="text-lg font-semibold text-gray-900">Products Management</h2>
                     <button
                         onClick={() => setShowAddProductModal(true)}
-                        className="rounded-md bg-teal-600 px-4 py-2 text-sm font-medium text-white hover:bg-teal-700"
+                        className="cursor-pointer rounded-md bg-teal-600 px-4 py-2 text-sm font-medium text-white hover:bg-teal-700"
                     >
                         Add New Product
                     </button>
@@ -244,12 +247,19 @@ const Dashboard = () => {
                                     </td>
                                     <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
                                         <div className="flex space-x-2">
-                                            <button className="text-blue-600 hover:text-blue-900">
+                                            <button
+                                                onClick={() => {
+                                                    setSelectedProduct(product);
+                                                    setShowEditProductModal(true);
+                                                }}
+                                                className="cursor-pointer text-blue-600 hover:text-blue-900"
+                                                title="Edit Product"
+                                            >
                                                 <Edit className="h-5 w-5" />
                                             </button>
                                             <button
                                                 onClick={() => handleDeleteProduct(product.id)}
-                                                className="text-red-600 hover:text-red-900"
+                                                className="cursor-pointer text-red-600 hover:text-red-900"
                                             >
                                                 <Trash2 className="h-5 w-5" />
                                             </button>
@@ -269,11 +279,19 @@ const Dashboard = () => {
                     <div className="flex gap-2">
                         <button
                             onClick={() => setShowAddOrderModal(true)}
-                            className="rounded-md bg-teal-600 px-4 py-2 text-sm font-medium text-white hover:bg-teal-700"
+                            className="cursor-pointer rounded-md bg-teal-600 px-4 py-2 text-sm font-medium text-white hover:bg-teal-700"
                         >
                             Add New Order
                         </button>
-                        <select className="rounded-md border border-gray-300 px-3 py-2 text-sm">
+                        <select
+                            className="cursor-pointer rounded-md border border-gray-300 px-3 py-2 text-sm"
+                            value={filterStatus || 'all'}
+                            onChange={(e) => {
+                                if (typeof setFilterStatus === 'function') {
+                                    setFilterStatus(e.target.value);
+                                }
+                            }}
+                        >
                             <option value="all">All Orders</option>
                             <option value="pending">Pending</option>
                             <option value="processing">Processing</option>
@@ -310,9 +328,9 @@ const Dashboard = () => {
                                     <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{order.date}</td>
                                     <td className="whitespace-nowrap px-6 py-4">
                                         <span className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${order.status === 'Completed' ? 'bg-green-100 text-green-800' :
-                                                order.status === 'Processing' ? 'bg-blue-100 text-blue-800' :
-                                                    order.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' :
-                                                        'bg-red-100 text-red-800'
+                                            order.status === 'Processing' ? 'bg-blue-100 text-blue-800' :
+                                                order.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' :
+                                                    'bg-red-100 text-red-800'
                                             }`}>
                                             {order.status}
                                         </span>
@@ -324,14 +342,14 @@ const Dashboard = () => {
                                                     setSelectedOrder(order);
                                                     setShowEditOrderModal(true);
                                                 }}
-                                                className="text-blue-600 hover:text-blue-900"
+                                                className="cursor-pointer text-blue-600 hover:text-blue-900"
                                                 title="Edit Order"
                                             >
                                                 <Edit className="h-5 w-5" />
                                             </button>
                                             <button
                                                 onClick={() => handleDeleteOrder(order.id)}
-                                                className="text-red-600 hover:text-red-900"
+                                                className="cursor-pointer text-red-600 hover:text-red-900"
                                                 title="Delete Order"
                                             >
                                                 <Trash2 className="h-5 w-5" />
@@ -353,7 +371,7 @@ const Dashboard = () => {
                             <h3 className="text-lg font-semibold text-gray-900">Add New Product</h3>
                             <button
                                 onClick={() => setShowAddProductModal(false)}
-                                className="text-gray-400 hover:text-gray-500"
+                                className="cursor-pointer text-gray-400 hover:text-gray-500"
                             >
                                 <X className="h-5 w-5" />
                             </button>
@@ -426,13 +444,13 @@ const Dashboard = () => {
                                 <button
                                     type="button"
                                     onClick={() => setShowAddProductModal(false)}
-                                    className="rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+                                    className="cursor-pointer rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
                                 >
                                     Cancel
                                 </button>
                                 <button
                                     type="submit"
-                                    className="rounded-md bg-teal-600 px-4 py-2 text-sm font-medium text-white hover:bg-teal-700"
+                                    className="cursor-pointer rounded-md bg-teal-600 px-4 py-2 text-sm font-medium text-white hover:bg-teal-700"
                                 >
                                     Add Product
                                 </button>
@@ -441,198 +459,301 @@ const Dashboard = () => {
                     </div>
                 </div>
             )}
+            {/* Edit Product Modal */}
+            {showEditProductModal && selectedProduct && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="w-full max-w-md rounded-lg bg-white p-6">
+                        <div className="mb-4 flex items-center justify-between">
+                            <h3 className="text-lg font-semibold text-gray-900">Edit Product</h3>
+                            <button
+                                onClick={() => {
+                                    setShowEditProductModal(false);
+                                    setSelectedProduct(null);
+                                }}
+                                className="cursor-pointer text-gray-400 hover:text-gray-500"
+                            >
+                                <X className="h-5 w-5" />
+                            </button>
+                        </div>
+                        <form
+                            onSubmit={e => {
+                                e.preventDefault();
+                                setProducts(products.map(product =>
+                                    product.id === selectedProduct.id ? selectedProduct : product
+                                ));
+                                setShowEditProductModal(false);
+                                setSelectedProduct(null);
+                            }}
+                            className="space-y-4"
+                        >
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">Product Name</label>
+                                <input
+                                    type="text"
+                                    value={selectedProduct.name}
+                                    onChange={e => setSelectedProduct({ ...selectedProduct, name: e.target.value })}
+                                    className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">Category</label>
+                                <select
+                                    value={selectedProduct.category}
+                                    onChange={e => setSelectedProduct({ ...selectedProduct, category: e.target.value })}
+                                    className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+                                    required
+                                >
+                                    <option value="">Select a category</option>
+                                    <option value="Supplements">Supplements</option>
+                                    <option value="Equipment">Equipment</option>
+                                    <option value="Accessories">Accessories</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">Price ($)</label>
+                                <input
+                                    type="number"
+                                    value={selectedProduct.price}
+                                    onChange={e => setSelectedProduct({ ...selectedProduct, price: e.target.value })}
+                                    className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+                                    min="0"
+                                    step="0.01"
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">Stock</label>
+                                <input
+                                    type="number"
+                                    value={selectedProduct.stock}
+                                    onChange={e => {
+                                        const stock = e.target.value;
+                                        let status = 'In Stock';
+                                        if (parseInt(stock) === 0) status = 'Out of Stock';
+                                        else if (parseInt(stock) <= 30) status = 'Low Stock';
+                                        setSelectedProduct({ ...selectedProduct, stock, status });
+                                    }}
+                                    className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+                                    min="0"
+                                    required
+                                />
+                            </div>
+                            <div className="mt-6 flex justify-end space-x-3">
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setShowEditProductModal(false);
+                                        setSelectedProduct(null);
+                                    }}
+                                    className="cursor-pointer rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    type="submit"
+                                    className="cursor-pointer rounded-md bg-teal-600 px-4 py-2 text-sm font-medium text-white hover:bg-teal-700"
+                                >
+                                    Update Product
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
+
             {/* Add Order Modal */}
             {showAddOrderModal && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-                <div className="w-full max-w-md rounded-lg bg-white p-6">
-                    <div className="mb-4 flex items-center justify-between">
-                        <h3 className="text-lg font-semibold text-gray-900">Add New Order</h3>
-                        <button
-                            onClick={() => setShowAddOrderModal(false)}
-                            className="text-gray-400 hover:text-gray-500"
-                        >
-                            <X className="h-5 w-5" />
-                        </button>
-                    </div>
-                    <form onSubmit={handleAddOrder} className="space-y-4">
-                        <div>
-                            <label htmlFor="customer" className="block text-sm font-medium text-gray-700">
-                                Customer Name
-                            </label>
-                            <input
-                                type="text"
-                                id="customer"
-                                name="customer"
-                                value={newOrder.customer}
-                                onChange={handleOrderInputChange}
-                                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
-                                required
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="products" className="block text-sm font-medium text-gray-700">
-                                Products
-                            </label>
-                            <input
-                                type="text"
-                                id="products"
-                                name="products"
-                                value={newOrder.products}
-                                onChange={handleOrderInputChange}
-                                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
-                                required
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="total" className="block text-sm font-medium text-gray-700">
-                                Total Amount ($)
-                            </label>
-                            <input
-                                type="text"
-                                id="total"
-                                name="total"
-                                value={newOrder.total}
-                                onChange={handleOrderInputChange}
-                                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
-                                required
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="status" className="block text-sm font-medium text-gray-700">
-                                Status
-                            </label>
-                            <select
-                                id="status"
-                                name="status"
-                                value={newOrder.status}
-                                onChange={handleOrderInputChange}
-                                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
-                                required
-                            >
-                                <option value="Pending">Pending</option>
-                                <option value="Processing">Processing</option>
-                                <option value="Completed">Completed</option>
-                                <option value="Cancelled">Cancelled</option>
-                            </select>
-                        </div>
-                        <div className="mt-6 flex justify-end space-x-3">
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="w-full max-w-md rounded-lg bg-white p-6">
+                        <div className="mb-4 flex items-center justify-between">
+                            <h3 className="text-lg font-semibold text-gray-900">Add New Order</h3>
                             <button
-                                type="button"
                                 onClick={() => setShowAddOrderModal(false)}
-                                className="rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+                                className="cursor-pointer text-gray-400 hover:text-gray-500"
                             >
-                                Cancel
-                            </button>
-                            <button
-                                type="submit"
-                                className="rounded-md bg-teal-600 px-4 py-2 text-sm font-medium text-white hover:bg-teal-700"
-                            >
-                                Add Order
+                                <X className="h-5 w-5" />
                             </button>
                         </div>
-                    </form>
+                        <form onSubmit={handleAddOrder} className="space-y-4">
+                            <div>
+                                <label htmlFor="customer" className="block text-sm font-medium text-gray-700">
+                                    Customer Name
+                                </label>
+                                <input
+                                    type="text"
+                                    id="customer"
+                                    name="customer"
+                                    value={newOrder.customer}
+                                    onChange={handleOrderInputChange}
+                                    className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="products" className="block text-sm font-medium text-gray-700">
+                                    Products
+                                </label>
+                                <input
+                                    type="text"
+                                    id="products"
+                                    name="products"
+                                    value={newOrder.products}
+                                    onChange={handleOrderInputChange}
+                                    className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="total" className="block text-sm font-medium text-gray-700">
+                                    Total Amount ($)
+                                </label>
+                                <input
+                                    type="text"
+                                    id="total"
+                                    name="total"
+                                    value={newOrder.total}
+                                    onChange={handleOrderInputChange}
+                                    className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="status" className="block text-sm font-medium text-gray-700">
+                                    Status
+                                </label>
+                                <select
+                                    id="status"
+                                    name="status"
+                                    value={newOrder.status}
+                                    onChange={handleOrderInputChange}
+                                    className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                                    required
+                                >
+                                    <option value="Pending">Pending</option>
+                                    <option value="Processing">Processing</option>
+                                    <option value="Completed">Completed</option>
+                                    <option value="Cancelled">Cancelled</option>
+                                </select>
+                            </div>
+                            <div className="mt-6 flex justify-end space-x-3">
+                                <button
+                                    type="button"
+                                    onClick={() => setShowAddOrderModal(false)}
+                                    className="cursor-pointer rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    type="submit"
+                                    className="cursor-pointer rounded-md bg-teal-600 px-4 py-2 text-sm font-medium text-white hover:bg-teal-700"
+                                >
+                                    Add Order
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </div>
             )}
 
             {/* Edit Order Modal */}
             {showEditOrderModal && selectedOrder && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-                <div className="w-full max-w-md rounded-lg bg-white p-6">
-                    <div className="mb-4 flex items-center justify-between">
-                        <h3 className="text-lg font-semibold text-gray-900">Edit Order</h3>
-                        <button
-                            onClick={() => {
-                                setShowEditOrderModal(false);
-                                setSelectedOrder(null);
-                            }}
-                            className="text-gray-400 hover:text-gray-500"
-                        >
-                            <X className="h-5 w-5" />
-                        </button>
-                    </div>
-                    <form onSubmit={handleUpdateOrder} className="space-y-4">
-                        <div>
-                            <label htmlFor="edit-customer" className="block text-sm font-medium text-gray-700">
-                                Customer Name
-                            </label>
-                            <input
-                                type="text"
-                                id="edit-customer"
-                                name="customer"
-                                value={selectedOrder.customer}
-                                onChange={handleOrderInputChange}
-                                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
-                                required
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="edit-products" className="block text-sm font-medium text-gray-700">
-                                Products
-                            </label>
-                            <input
-                                type="text"
-                                id="edit-products"
-                                name="products"
-                                value={selectedOrder.products}
-                                onChange={handleOrderInputChange}
-                                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
-                                required
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="edit-total" className="block text-sm font-medium text-gray-700">
-                                Total Amount ($)
-                            </label>
-                            <input
-                                type="text"
-                                id="edit-total"
-                                name="total"
-                                value={selectedOrder.total}
-                                onChange={handleOrderInputChange}
-                                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
-                                required
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="edit-status" className="block text-sm font-medium text-gray-700">
-                                Status
-                            </label>
-                            <select
-                                id="edit-status"
-                                name="status"
-                                value={selectedOrder.status}
-                                onChange={handleOrderInputChange}
-                                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
-                                required
-                            >
-                                <option value="Pending">Pending</option>
-                                <option value="Processing">Processing</option>
-                                <option value="Completed">Completed</option>
-                                <option value="Cancelled">Cancelled</option>
-                            </select>
-                        </div>
-                        <div className="mt-6 flex justify-end space-x-3">
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="w-full max-w-md rounded-lg bg-white p-6">
+                        <div className="mb-4 flex items-center justify-between">
+                            <h3 className="text-lg font-semibold text-gray-900">Edit Order</h3>
                             <button
-                                type="button"
                                 onClick={() => {
-                                    setShowEditOrderModal(false);
-                                    setSelectedOrder(null);
+                                    setSelectedOrder(false); // Pass the current order directly
+                                    setShowEditOrderModal(true);
                                 }}
-                                className="rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+                                className="text-gray-400 hover:text-gray-500"
                             >
-                                Cancel
-                            </button>
-                            <button
-                                type="submit"
-                                className="rounded-md bg-teal-600 px-4 py-2 text-sm font-medium text-white hover:bg-teal-700"
-                            >
-                                Update Order
+                                <X className="h-5 w-5" />
                             </button>
                         </div>
-                    </form>
+                        <form onSubmit={handleUpdateOrder} className="space-y-4">
+                            <div>
+                                <label htmlFor="edit-customer" className="block text-sm font-medium text-gray-700">
+                                    Customer Name
+                                </label>
+                                <input
+                                    type="text"
+                                    id="edit-customer"
+                                    name="customer"
+                                    value={selectedOrder.customer}
+                                    onChange={handleOrderInputChange}
+                                    className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="edit-products" className="block text-sm font-medium text-gray-700">
+                                    Products
+                                </label>
+                                <input
+                                    type="text"
+                                    id="edit-products"
+                                    name="products"
+                                    value={selectedOrder.products}
+                                    onChange={handleOrderInputChange}
+                                    className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="edit-total" className="block text-sm font-medium text-gray-700">
+                                    Total Amount ($)
+                                </label>
+                                <input
+                                    type="text"
+                                    id="edit-total"
+                                    name="total"
+                                    value={selectedOrder.total}
+                                    onChange={handleOrderInputChange}
+                                    className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="edit-status" className="block text-sm font-medium text-gray-700">
+                                    Status
+                                </label>
+                                <select
+                                    id="edit-status"
+                                    name="status"
+                                    value={selectedOrder.status}
+                                    onChange={handleOrderInputChange}
+                                    className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                                    required
+                                >
+                                    <option value="Pending">Pending</option>
+                                    <option value="Processing">Processing</option>
+                                    <option value="Completed">Completed</option>
+                                    <option value="Cancelled">Cancelled</option>
+                                </select>
+                            </div>
+                            <div className="mt-6 flex justify-end space-x-3">
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setShowEditOrderModal(false);
+                                        setSelectedOrder(null);
+                                    }}
+                                    className="cursor-pointer rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    type="submit"
+                                    className="cursor-pointer rounded-md bg-teal-600 px-4 py-2 text-sm font-medium text-white hover:bg-teal-700"
+                                >
+                                    Update Order
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </div>
             )}
         </div>
     );

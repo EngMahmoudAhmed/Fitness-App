@@ -86,7 +86,7 @@ const Cart = ({ isOpen, onClose, cartItems, setCartItems }) => {
                         <span className="text-xl font-bold text-teal-600">${total.toFixed(2)}</span>
                     </div>
                     <button
-                        className="w-full bg-teal-600 text-white py-3 rounded-lg font-medium hover:bg-teal-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="cursor-pointer w-full bg-teal-600 text-white py-3 rounded-lg font-medium hover:bg-teal-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                         disabled={cartItems.length === 0}
                         onClick={() => {
                             onClose();

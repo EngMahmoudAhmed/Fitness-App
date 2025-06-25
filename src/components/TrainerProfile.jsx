@@ -151,7 +151,7 @@ const TrainerProfile = () => {
                 {trainer.specialties.map((specialty, index) => (
                   <span
                     key={index}
-                    className="bg-teal-500 text-white px-4 py-2 rounded-full text-sm"
+                    className="cursor-pointer bg-teal-500 text-white px-4 py-2 rounded-full text-sm"
                   >
                     {specialty}
                   </span>
@@ -161,7 +161,7 @@ const TrainerProfile = () => {
 
             <div className="bg-gray-900 rounded-lg p-6">
               <h2 className="text-2xl font-bold mb-4">Book a Session</h2>
-              <button className="bg-teal-500 hover:bg-teal-600 text-white px-8 py-3 rounded-lg font-semibold transition duration-300">
+              <button className="cursor-pointer bg-teal-500 hover:bg-teal-600 text-white px-8 py-3 rounded-lg font-semibold transition duration-300">
                 Schedule Training
               </button>
             </div>
