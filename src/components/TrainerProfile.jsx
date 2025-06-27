@@ -1,6 +1,8 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Star, Clock, Award, ArrowLeft, Mail, Phone, Calendar } from 'lucide-react';
+ // Assuming TrainerProfile is in the same directory
+
 
 const TrainerProfile = () => {
   const { id } = useParams();

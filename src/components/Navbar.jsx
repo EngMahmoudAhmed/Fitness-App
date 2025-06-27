@@ -61,48 +61,14 @@ export const Navbar = () => {
                             </h2>
                         </Link>
 
+
                         <nav className="hidden md:block" aria-label="Global">
                             <ul className="flex items-center gap-6 text-sm">
-                                <li>
-                                    <Link
-                                        className="text-gray-700 transition hover:text-teal-500"
-                                        to="/"
-                                    >
-                                        Home
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        className="text-gray-700 transition hover:text-teal-500"
-                                        to="/courses"
-                                    >
-                                        Courses
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        className="text-gray-700 transition hover:text-teal-500"
-                                        to="/store"
-                                    >
-                                        Store
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        className="text-gray-700 transition hover:text-teal-500"
-                                        to="/services"
-                                    >
-                                        Services
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        className="text-gray-700 transition hover:text-teal-500"
-                                        to="/aboutus"
-                                    >
-                                        About Us
-                                    </Link>
-                                </li>
+                                {navLinks.map(link => (
+                                    <li key={link.to}>
+                                        <Link className="text-gray-700 hover:text-teal-500" to={link.to}>{link.label}</Link>
+                                    </li>
+                                ))}
                             </ul>
                         </nav>
 

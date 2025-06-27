@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+// import React, { useEffect, useState } from 'react';
+// import axios from 'axios';
 import { Users, Target, Award, History } from 'lucide-react';
 
 const AboutUs = () => {

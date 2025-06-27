@@ -1,9 +1,10 @@
 // import { useState } from 'react';
 import { X, Plus, Minus, ShoppingCart } from 'lucide-react';
 import axios from 'axios';
+import { useState } from 'react';
 
 const Cart = ({ isOpen, onClose, cartItems, setCartItems }) => {
-
+    const [loading , setLoading] = useState()
     const removeFromCart = (productId) => {
         setCartItems(prev => prev.filter(item => item.id !== productId));
     };

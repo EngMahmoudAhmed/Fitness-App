@@ -30,72 +30,72 @@ const Store = () => {
         });
         setIsCartOpen(true);
     };
-    const products = [
-        {
-            id: 1,
-            name: "Premium Yoga Mat",
-            price: 29.99,
-            image: gym1,
-            // image: "https://images.unsplash.com/photo-1593810450967-f9c42742e326?q=80&w=1470&auto=format&fit=crop",
-            description: "High-quality, non-slip yoga mat perfect for all types of exercises"
-        },
-        {
-            id: 2,
-            name: "Resistance Bands Set",
-            price: 24.99,
-            image: gym2,
-            description: "Set of 5 resistance bands with different tension levels"
-        },
-        {
-            id: 3,
-            name: "Adjustable Dumbbell Set",
-            price: 149.99,
-            image: "https://images.unsplash.com/photo-1638536532686-d610adfc8e5c?q=80&w=1470&auto=format&fit=crop",
-            description: "Adjustable weight dumbbells perfect for home workouts"
-        },
-        {
-            id: 4,
-            name: "Smart Water Bottle",
-            price: 34.99,
-            image: "https://images.unsplash.com/photo-1523362628745-0c100150b504?q=80&w=1473&auto=format&fit=crop",
-            description: "Track your hydration with this smart water bottle"
-        },
-        {
-            id: 5,
-            name: "Fitness Tracker Watch",
-            price: 99.99,
-            image: "https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?q=80&w=1476&auto=format&fit=crop",
-            description: "Monitor your fitness activities and health metrics"
-        },
-        {
-            id: 6,
-            name: "Exercise Ball",
-            price: 19.99,
-            image: "https://images.unsplash.com/photo-1593476087123-36d1de271f08?q=80&w=1470&auto=format&fit=crop",
-            description: "Multi-purpose exercise ball for core strength and .."
-        },
-        {
-            id: 7,
-            name: "Smart Water Bottle",
-            price: 34.99,
-            image: "https://images.unsplash.com/photo-1523362628745-0c100150b504?q=80&w=1473&auto=format&fit=crop",
-            description: "Track your hydration with this smart water bottle"
-        },
-        {
-            id: 8,
-            name: "Fitness Tracker Watch",
-            price: 99.99,
-            image: "https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?q=80&w=1476&auto=format&fit=crop",
-            description: "Monitor your fitness activities and health metrics"
-        },
-        {
-            id: 9,
-            name: "Exercise Ball",
-            price: 19.99,
-            image: "https://images.unsplash.com/photo-1593476087123-36d1de271f08?q=80&w=1470&auto=format&fit=crop",
-            description: "Multi-purpose exercise ball for core strength and .."
-        },
-    ];
+    // const products = [
+    //     {
+    //         id: 1,
+    //         name: "Premium Yoga Mat",
+    //         price: 29.99,
+    //         image: gym1,
+    //         // image: "https://images.unsplash.com/photo-1593810450967-f9c42742e326?q=80&w=1470&auto=format&fit=crop",
+    //         description: "High-quality, non-slip yoga mat perfect for all types of exercises"
+    //     },
+    //     {
+    //         id: 2,
+    //         name: "Resistance Bands Set",
+    //         price: 24.99,
+    //         image: gym2,
+    //         description: "Set of 5 resistance bands with different tension levels"
+    //     },
+    //     {
+    //         id: 3,
+    //         name: "Adjustable Dumbbell Set",
+    //         price: 149.99,
+    //         image: "https://images.unsplash.com/photo-1638536532686-d610adfc8e5c?q=80&w=1470&auto=format&fit=crop",
+    //         description: "Adjustable weight dumbbells perfect for home workouts"
+    //     },
+    //     {
+    //         id: 4,
+    //         name: "Smart Water Bottle",
+    //         price: 34.99,
+    //         image: "https://images.unsplash.com/photo-1523362628745-0c100150b504?q=80&w=1473&auto=format&fit=crop",
+    //         description: "Track your hydration with this smart water bottle"
+    //     },
+    //     {
+    //         id: 5,
+    //         name: "Fitness Tracker Watch",
+    //         price: 99.99,
+    //         image: "https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?q=80&w=1476&auto=format&fit=crop",
+    //         description: "Monitor your fitness activities and health metrics"
+    //     },
+    //     {
+    //         id: 6,
+    //         name: "Exercise Ball",
+    //         price: 19.99,
+    //         image: "https://images.unsplash.com/photo-1593476087123-36d1de271f08?q=80&w=1470&auto=format&fit=crop",
+    //         description: "Multi-purpose exercise ball for core strength and .."
+    //     },
+    //     {
+    //         id: 7,
+    //         name: "Smart Water Bottle",
+    //         price: 34.99,
+    //         image: "https://images.unsplash.com/photo-1523362628745-0c100150b504?q=80&w=1473&auto=format&fit=crop",
+    //         description: "Track your hydration with this smart water bottle"
+    //     },
+    //     {
+    //         id: 8,
+    //         name: "Fitness Tracker Watch",
+    //         price: 99.99,
+    //         image: "https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?q=80&w=1476&auto=format&fit=crop",
+    //         description: "Monitor your fitness activities and health metrics"
+    //     },
+    //     {
+    //         id: 9,
+    //         name: "Exercise Ball",
+    //         price: 19.99,
+    //         image: "https://images.unsplash.com/photo-1593476087123-36d1de271f08?q=80&w=1470&auto=format&fit=crop",
+    //         description: "Multi-purpose exercise ball for core strength and .."
+    //     },
+    // ];
 
     return (
         <div className="container mx-auto px-4 py-8 relative">
