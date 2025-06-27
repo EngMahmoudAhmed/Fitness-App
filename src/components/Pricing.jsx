@@ -1,6 +1,6 @@
 // import React, { useEffect, useState } from 'react';
 // import axios from 'axios';
-import { Link } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { Check } from 'lucide-react';
 // import { useNavigate } from 'react-router-dom';
 
@@ -107,9 +107,9 @@ const Pricing = () => {
                                     </li>
                                 ))}
                             </ul>
-                            <Link to="/signup" className="block">
+                            <Link to="/payment" className="block">
                                 <button 
-                                    className={`w-full py-3 px-6 rounded-xl font-semibold transition-colors duration-200 ${plan.highlighted ? 'bg-white text-teal-500 hover:bg-gray-100' : 'bg-teal-500 text-white hover:bg-teal-600'}`}
+                                    className={`cursor-pointer w-full py-3 px-6 rounded-xl font-semibold transition-colors duration-200 ${plan.highlighted ? 'bg-white text-teal-500 hover:bg-gray-100' : 'bg-teal-500 text-white hover:bg-teal-600'}`}
                                 >
                                     {plan.buttonText}
                                 </button>
