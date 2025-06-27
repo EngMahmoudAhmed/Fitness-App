@@ -63,11 +63,46 @@ export const Navbar = () => {
 
                         <nav className="hidden md:block" aria-label="Global">
                             <ul className="flex items-center gap-6 text-sm">
-                                {navLinks.map(link => (
-                                    <li key={link.to}>
-                                        <Link className="text-gray-700 hover:text-teal-500" to={link.to}>{link.label}</Link>
-                                    </li>
-                                ))}
+                                <li>
+                                    <Link
+                                        className="text-gray-700 transition hover:text-teal-500"
+                                        to="/"
+                                    >
+                                        Home
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        className="text-gray-700 transition hover:text-teal-500"
+                                        to="/courses"
+                                    >
+                                        Courses
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        className="text-gray-700 transition hover:text-teal-500"
+                                        to="/store"
+                                    >
+                                        Store
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        className="text-gray-700 transition hover:text-teal-500"
+                                        to="/services"
+                                    >
+                                        Services
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        className="text-gray-700 transition hover:text-teal-500"
+                                        to="/aboutus"
+                                    >
+                                        About Us
+                                    </Link>
+                                </li>
                             </ul>
                         </nav>
 
@@ -134,13 +169,51 @@ export const Navbar = () => {
                     <div className={`md:hidden mobile-menu-container ${isMenuOpen ? 'block' : 'hidden'} absolute left-0 right-0 top-16 bg-white shadow-lg z-50`}>
                         <nav className="px-4 py-3">
                             <ul className="space-y-3">
-                                {navLinks.map(link => (
-                                    <li key={link.to}>
-                                        <Link to={link.to} className="block text-gray-700 hover:text-teal-500" onClick={() => setIsMenuOpen(false)}>
-                                            {link.label}
-                                        </Link>
-                                    </li>
-                                ))}
+                                <li>
+                                    <Link
+                                        to="/"
+                                        className="block text-gray-700 hover:text-teal-500 transition"
+                                        onClick={() => setIsMenuOpen(false)}
+                                    >
+                                        Home
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        to="/courses"
+                                        className="block text-gray-700 hover:text-teal-500 transition"
+                                        onClick={() => setIsMenuOpen(false)}
+                                    >
+                                        Courses
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        to="/store"
+                                        className="block text-gray-700 hover:text-teal-500 transition"
+                                        onClick={() => setIsMenuOpen(false)}
+                                    >
+                                        Store
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        to="/services"
+                                        className="block text-gray-700 hover:text-teal-500 transition"
+                                        onClick={() => setIsMenuOpen(false)}
+                                    >
+                                        Services
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        to="/aboutus"
+                                        className="block text-gray-700 hover:text-teal-500 transition"
+                                        onClick={() => setIsMenuOpen(false)}
+                                    >
+                                        About Us
+                                    </Link>
+                                </li>
                             </ul>
 
                             {!isAuthRoute && (
