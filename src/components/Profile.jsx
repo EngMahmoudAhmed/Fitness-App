@@ -1,18 +1,40 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Camera, Mail, MapPin, Phone, Edit2, Check, X } from 'lucide-react'
+import axios from 'axios'
 
 export default function Profile() {
     const [isEditing, setIsEditing] = useState(false)
     const [profile, setProfile] = useState({
-        name: 'John Doe',
-        email: 'john@example.com',
-        phone: '+1 234 567 890',
-        location: 'New York, USA',
-        bio: 'Fitness enthusiast and health coach with 5+ years of experience.',
-        avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
+        name: '',
+        email: '',
+        phone: '',
+        location: '',
+        bio: '',
+        avatar: ''
     })
 
     const [editForm, setEditForm] = useState(profile)
+
+    useEffect(() => {
+        const token = localStorage.getItem('token')
+        if (!token) {
+            console.error('No token found, redirecting to login...')
+            return
+        }
+
+        axios.get('https://urchin-app-2qxwc.ondigitalocean.app/api/user/profile', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                setProfile(response.data)
+                setEditForm(response.data)
+            })
+            .catch(error => {
+                console.error('خطأ أثناء جلب البيانات:', error.response?.data || error.message)
+            })
+    }, [])
 
     const handleEdit = () => {
         setIsEditing(true)
@@ -20,8 +42,20 @@ export default function Profile() {
     }
 
     const handleSave = () => {
-        setProfile(editForm)
-        setIsEditing(false)
+        const token = localStorage.getItem('token')
+
+        axios.put('https://urchin-app-2qxwc.ondigitalocean.app/api/user/profile', editForm, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                setProfile(response.data)
+                setIsEditing(false)
+            })
+            .catch(error => {
+                console.error('خطأ أثناء تحديث البيانات:', error.response?.data || error.message)
+            })
     }
 
     const handleCancel = () => {
@@ -32,13 +66,12 @@ export default function Profile() {
     return (
         <div className="min-h-screen bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mx-auto bg-gray-800 rounded-lg shadow-xl overflow-hidden">
-                {/* Profile Header */}
                 <div className="relative h-48 bg-gradient-to-r from-teal-500 to-teal-600">
                     <div className="absolute -bottom-12 left-8">
                         <div className="relative">
                             <img
                                 className="h-32 w-32 rounded-full border-4 border-gray-800 object-cover"
-                                src={profile.avatar}
+                                src={profile.avatar || 'https://via.placeholder.com/150'}
                                 alt={profile.name}
                             />
                             <button className="absolute bottom-0 right-0 p-1 rounded-full bg-gray-800 text-teal-500 hover:text-teal-400 transition-colors">
@@ -48,7 +81,6 @@ export default function Profile() {
                     </div>
                 </div>
 
-                {/* Profile Content */}
                 <div className="pt-16 pb-8 px-8">
                     <div className="flex justify-between items-start mb-6">
                         <div>
@@ -93,7 +125,6 @@ export default function Profile() {
                         </div>
                     </div>
 
-                    {/* Bio */}
                     <div className="mb-6">
                         {isEditing ? (
                             <textarea
@@ -107,7 +138,6 @@ export default function Profile() {
                         )}
                     </div>
 
-                    {/* Contact Information */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="flex items-center text-gray-300">
                             <Mail className="h-5 w-5 text-teal-500 mr-2" />

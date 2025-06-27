@@ -1,7 +1,25 @@
-import React from 'react';
+// import React, { useEffect, useState } from 'react';
 import { Star } from 'lucide-react';
+// import axios from 'axios';
 
 const Testimonials = () => {
+    // const [testimonials, setTestimonials] = useState([]);
+
+    // useEffect(() => {
+    //     axios.get('https://urchin-app-2qxwc.ondigitalocean.app/api/testimonials')
+    //         .then(response => setTestimonials(response.data))
+    //         .catch(error => console.error(error));
+    // }, []);
+
+    // const renderStars = (rating) => {
+    //     return [...Array(5)].map((_, index) => (
+    //         <Star
+    //             key={index}
+    //             className={`w-5 h-5 ${index < rating ? 'text-yellow-400 fill-current' : 'text-gray-400'}`}
+    //         />
+    //     ));
+    // };
+
     const testimonials = [
         {
             name: 'Sarah Johnson',
@@ -54,7 +72,7 @@ const Testimonials = () => {
                                 </div>
                             </div>
                             <div className="flex mb-4">
-                                {renderStars(testimonial.rating)}
+                                {   renderStars(testimonial.rating)}
                             </div>
                             <p className="text-gray-700">{testimonial.content}</p>
                         </div>

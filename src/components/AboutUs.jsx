@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Users, Target, Award, History } from 'lucide-react';
 
 const AboutUs = () => {
+  // const [teamMembers, setTeamMembers] = useState([]);
+
+  // useEffect(() => {
+  //   axios.get('https://urchin-app-2qxwc.ondigitalocean.app/api/team-members')
+  //     .then(response => setTeamMembers(response.data))
+  //     .catch(error => console.error('Error fetching team members:', error));
+  // }, []);
+
   const teamMembers = [
     {
       name: 'Sarah Johnson',

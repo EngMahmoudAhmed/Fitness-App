@@ -1,7 +1,9 @@
-// import { useState } from 'react';
+import { useState } from 'react';
 import { X, Plus, Minus, ShoppingCart } from 'lucide-react';
+import axios from 'axios';
 
 const Cart = ({ isOpen, onClose, cartItems, setCartItems }) => {
+    const [loading, setLoading] = useState(false);
 
     const removeFromCart = (productId) => {
         setCartItems(prev => prev.filter(item => item.id !== productId));
@@ -18,6 +20,25 @@ const Cart = ({ isOpen, onClose, cartItems, setCartItems }) => {
     };
 
     const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+    const handleCheckout = async () => {
+        setLoading(true);
+        try {
+            await axios.post('https://urchin-app-2qxwc.ondigitalocean.app/api/orders', {
+                items: cartItems,
+                total: total.toFixed(2)
+            });
+
+            alert('Order placed successfully!');
+            setCartItems([]);
+            onClose();
+        } catch (error) {
+            console.error('Checkout failed:', error);
+            alert('Failed to place order.');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     if (!isOpen) return null;
 
@@ -85,10 +106,11 @@ const Cart = ({ isOpen, onClose, cartItems, setCartItems }) => {
                         <span className="text-xl font-bold text-teal-600">${total.toFixed(2)}</span>
                     </div>
                     <button
+                        onClick={handleCheckout}
                         className="w-full bg-teal-600 text-white py-3 rounded-lg font-medium hover:bg-teal-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                        disabled={cartItems.length === 0}
+                        disabled={cartItems.length === 0 || loading}
                     >
-                        Checkout (${total.toFixed(2)})
+                        {loading ? 'Processing...' : `Checkout ($${total.toFixed(2)})`}
                     </button>
                 </div>
             </div>

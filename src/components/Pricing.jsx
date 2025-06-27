@@ -1,8 +1,36 @@
-import React from 'react';
+// import React, { useEffect, useState } from 'react';
+// import axios from 'axios';
 import { Check } from 'lucide-react';
-import { Link } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 const Pricing = () => {
+    // const [plans, setPlans] = useState([]);
+    // const navigate = useNavigate();
+
+    // useEffect(() => {
+    //     axios.get('https://urchin-app-2qxwc.ondigitalocean.app/api/plans')
+    //         .then(res => {
+    //             const formattedPlans = res.data.map(plan => ({
+    //                 ...plan,
+    //                 features: typeof plan.features === 'string' ? JSON.parse(plan.features) : plan.features
+    //             }));
+    //             setPlans(formattedPlans);
+    //         })
+    //         .catch(err => {
+    //             console.error('Failed to fetch plans:', err);
+    //         });
+    // }, []);
+
+
+    // const handleChoosePlan = (plan) => {
+    //     const isAuthenticated = !!localStorage.getItem("auth_token");
+
+    //     if (isAuthenticated) {
+    //         navigate(`/checkout?plan=${plan.id}`);
+    //     } else {
+    //         navigate(`/signup?plan=${plan.id}`);
+    //     }
+    // };
     const plans = [
         {
             name: 'Basic',
@@ -54,12 +82,14 @@ const Pricing = () => {
         <section className="py-16 bg-gray-50">
             <div className="container mx-auto px-4">
                 <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-4">Choose Your Plan</h2>
-                <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">Select the perfect plan that matches your fitness journey and goals</p>
-                
+                <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+                    Select the perfect plan that matches your fitness journey and goals
+                </p>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {plans.map((plan, index) => (
-                        <div 
-                            key={index} 
+                        <div
+                            key={index}
                             className={`rounded-2xl p-8 ${plan.highlighted ? 'bg-teal-500 text-white transform scale-105' : 'bg-white'} shadow-xl transition-all duration-300 hover:transform hover:scale-105`}
                         >
                             <h3 className={`text-2xl font-bold mb-2 ${plan.highlighted ? 'text-white' : 'text-gray-900'}`}>{plan.name}</h3>
@@ -76,13 +106,13 @@ const Pricing = () => {
                                     </li>
                                 ))}
                             </ul>
-                            <Link to="/signup" className="block">
-                                <button 
-                                    className={`w-full py-3 px-6 rounded-xl font-semibold transition-colors duration-200 ${plan.highlighted ? 'bg-white text-teal-500 hover:bg-gray-100' : 'bg-teal-500 text-white hover:bg-teal-600'}`}
-                                >
-                                    {plan.buttonText}
-                                </button>
-                            </Link>
+                            <button
+                                // onClick={() => handleChoosePlan(plan)}
+                                className={`cursor-pointer w-full py-3 px-6 rounded-xl font-semibold transition-colors duration-200 ${plan.highlighted ? 'bg-white text-teal-500 hover:bg-gray-100' : 'bg-teal-500 text-white hover:bg-teal-600'}`}
+
+                            >
+                                {plan.buttonText}
+                            </button>
                         </div>
                     ))}
                 </div>

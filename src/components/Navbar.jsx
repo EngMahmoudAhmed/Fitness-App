@@ -1,205 +1,202 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 export const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
-    const location = window.location.pathname;
-    const isAuthRoute = ["/login", "/signup", "/forget-password"].includes(location);
+    const navigate = useNavigate();
+    const location = useLocation();
 
-    // Handle scroll effect
+    const isAuthRoute = ["/login", "/signup", "/forget-password"].includes(location.pathname);
+
+    const user = (() => {
+        try {
+            return JSON.parse(localStorage.getItem("auth_user"));
+        } catch {
+            return null;
+        }
+    })();
+
     useEffect(() => {
         const handleScroll = () => {
-            if (window.scrollY > 10) {
-                setScrolled(true);
-            } else {
-                setScrolled(false);
-            }
+            setScrolled(window.scrollY > 10);
         };
-
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
-    const toggleMenu = () => {
-        setIsMenuOpen(!isMenuOpen);
-    };
-    
-    // Close menu when clicking outside
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (isMenuOpen && !event.target.closest('.mobile-menu-container')) {
                 setIsMenuOpen(false);
             }
         };
-
         document.addEventListener('mousedown', handleClickOutside);
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, [isMenuOpen]);
+
+    const handleLogout = () => {
+        localStorage.removeItem('auth_token');
+        localStorage.removeItem('auth_user');
+        navigate('/login');
+    };
+
+    const navLinks = [
+        { to: "/", label: "Home" },
+        { to: "/courses", label: "Courses" },
+        { to: "/store", label: "Store" },
+        { to: "/services", label: "Services" },
+        { to: "/aboutus", label: "About Us" },
+        { to: "/trainers", label: "Trainers" },
+    ];
 
     return (
         <>
             <header className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'shadow-md bg-white/95 backdrop-blur-sm' : 'bg-white'}`}>
                 <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
                     <div className="flex h-16 items-center justify-between">
-                        <div className="flex items-center cursor-pointer transition-transform hover:scale-105">
-                            <Link to="/">
-                                <h2 className="font-bold text-2xl">
-                                    Royal <span className="text-teal-600">Fitness</span>
-                                </h2>
-                            </Link>
-                        </div>
+                        <Link to="/">
+                            <h2 className="font-bold text-2xl cursor-pointer hover:scale-105 transition-transform">
+                                Royal <span className="text-teal-600">Fitness</span>
+                            </h2>
+                        </Link>
 
                         <nav className="hidden md:block" aria-label="Global">
                             <ul className="flex items-center gap-6 text-sm">
-                                <li>
-                                    <Link
-                                        className="text-gray-700 transition hover:text-teal-500"
-                                        to="/"
-                                    >
-                                        Home
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        className="text-gray-700 transition hover:text-teal-500"
-                                        to="/courses"
-                                    >
-                                        Courses
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        className="text-gray-700 transition hover:text-teal-500"
-                                        to="/store"
-                                    >
-                                        Store
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        className="text-gray-700 transition hover:text-teal-500"
-                                        to="/services"
-                                    >
-                                        Services
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        className="text-gray-700 transition hover:text-teal-500"
-                                        to="/aboutus"
-                                    >
-                                        About Us
-                                    </Link>
-                                </li>
+                                {navLinks.map(link => (
+                                    <li key={link.to}>
+                                        <Link className="text-gray-700 hover:text-teal-500" to={link.to}>{link.label}</Link>
+                                    </li>
+                                ))}
                             </ul>
                         </nav>
 
                         <div className="flex items-center gap-4">
                             {!isAuthRoute && (
-                                <div className="hidden sm:flex sm:gap-4">
+                                <div className="hidden sm:flex items-center gap-4">
                                     <Link
-                                        className="rounded-3xl bg-teal-600 hover:bg-teal-800 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
                                         to="/chat"
+                                        className="rounded-3xl bg-teal-600 hover:bg-teal-800 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition hover:shadow-md hover:-translate-y-0.5"
                                     >
                                         Chat With AI
                                     </Link>
+
+                                    {user ? (
+                                        <div className="flex items-center gap-4">
+                                            {user.role === 'admin' && (
+                                                <Link
+                                                    to="/admin"
+                                                    className="cursor-pointer bg-gray-800 text-white px-4 py-1.5 rounded-3xl text-sm hover:bg-gray-900 transition"
+                                                >
+                                                    Dashboard
+                                                </Link>
+                                            )}
+                                            <span className="text-gray-800 text-sm font-medium hidden lg:block">
+                                                Hello, {user.first_name}
+                                            </span>
+                                            <button
+                                                onClick={handleLogout}
+                                                className="cursor-pointer bg-red-500 hover:bg-red-600 text-white px-3 py-1.5 text-sm rounded-3xl transition"
+                                            >
+                                                Logout
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <>
+                                            <Link
+                                                to="/login"
+                                                className="bg-teal-500 hover:bg-teal-600 text-white px-5 py-2.5 text-sm rounded-3xl transition"
+                                            >
+                                                Login
+                                            </Link>
+                                            {/* <Link
+                                                to="/signup"
+                                                className="bg-gray-100 hover:bg-gray-200 text-teal-700 px-5 py-2.5 text-sm rounded-3xl transition border border-teal-500"
+                                            >
+                                                Sign Up
+                                            </Link> */}
+                                        </>
+                                    )}
                                 </div>
                             )}
 
                             <button
-                                className="cursor-pointer block md:hidden rounded-lg bg-gray-100 p-2.5 text-gray-600 transition hover:text-gray-600/75"
-                                onClick={toggleMenu}
+                                className="md:hidden rounded-lg bg-gray-100 p-2.5 text-gray-600"
+                                onClick={() => setIsMenuOpen(!isMenuOpen)}
                             >
-                                <span className="sr-only">Toggle menu</span>
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="h-5 w-5"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="M4 6h16M4 12h16M4 18h16"
-                                    />
+                                <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
                                 </svg>
                             </button>
                         </div>
                     </div>
 
-                    {/* Mobile Menu */}
-                    <div
-                        className={`md:hidden mobile-menu-container ${isMenuOpen ? 'block' : 'hidden'} absolute left-0 right-0 top-16 bg-white shadow-lg z-50 transition-all duration-300 ease-in-out`}
-                    >
+                    <div className={`md:hidden mobile-menu-container ${isMenuOpen ? 'block' : 'hidden'} absolute left-0 right-0 top-16 bg-white shadow-lg z-50`}>
                         <nav className="px-4 py-3">
                             <ul className="space-y-3">
-                                <li>
-                                    <Link
-                                        to="/"
-                                        className="block text-gray-700 hover:text-teal-500 transition"
-                                        onClick={() => setIsMenuOpen(false)}
-                                    >
-                                        Home
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        to="/courses"
-                                        className="block text-gray-700 hover:text-teal-500 transition"
-                                        onClick={() => setIsMenuOpen(false)}
-                                    >
-                                        Courses
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        to="/store"
-                                        className="block text-gray-700 hover:text-teal-500 transition"
-                                        onClick={() => setIsMenuOpen(false)}
-                                    >
-                                        Store
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        to="/services"
-                                        className="block text-gray-700 hover:text-teal-500 transition"
-                                        onClick={() => setIsMenuOpen(false)}
-                                    >
-                                        Services
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        to="/aboutus"
-                                        className="block text-gray-700 hover:text-teal-500 transition"
-                                        onClick={() => setIsMenuOpen(false)}
-                                    >
-                                        About Us
-                                    </Link>
-                                </li>
+                                {navLinks.map(link => (
+                                    <li key={link.to}>
+                                        <Link to={link.to} className="block text-gray-700 hover:text-teal-500" onClick={() => setIsMenuOpen(false)}>
+                                            {link.label}
+                                        </Link>
+                                    </li>
+                                ))}
                             </ul>
-                            
-                            {/* Mobile Button */}
+
                             {!isAuthRoute && (
-                                <div className="mt-4 pb-2">
+                                <div className="mt-4">
                                     <Link
                                         to="/chat"
-                                        className="block w-full text-center rounded-3xl bg-teal-600 hover:bg-teal-800 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-all duration-200"
+                                        className="block w-full text-center rounded-3xl bg-teal-600 hover:bg-teal-800 px-5 py-2.5 text-sm font-medium text-white"
                                         onClick={() => setIsMenuOpen(false)}
                                     >
                                         Chat With AI
                                     </Link>
+
+                                    {user ? (
+                                        <div className="mt-3 flex flex-col items-center gap-3">
+                                            {user.role === 'admin' && (
+                                                <Link
+                                                    to="/admin"
+                                                    className="block w-full text-center bg-gray-800 hover:bg-gray-900 text-white px-5 py-2.5 rounded-3xl text-sm"
+                                                    onClick={() => setIsMenuOpen(false)}
+                                                >
+                                                    Dashboard
+                                                </Link>
+                                            )}
+                                            <span className="text-sm text-gray-700">Hello, {user.first_name}</span>
+                                            <button
+                                                onClick={() => { setIsMenuOpen(false); handleLogout(); }}
+                                                className="bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded-3xl text-sm"
+                                            >
+                                                Logout
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <div className="mt-3 flex flex-col gap-2">
+                                            <Link
+                                                to="/login"
+                                                className="block w-full text-center rounded-3xl bg-teal-500 hover:bg-teal-600 px-5 py-2.5 text-sm font-medium text-white"
+                                                onClick={() => setIsMenuOpen(false)}
+                                            >
+                                                Login
+                                            </Link>
+                                            <Link
+                                                to="/signup"
+                                                className="block w-full text-center rounded-3xl border border-teal-500 bg-white hover:bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-700"
+                                                onClick={() => setIsMenuOpen(false)}
+                                            >
+                                                Sign Up
+                                            </Link>
+                                        </div>
+                                    )}
                                 </div>
                             )}
                         </nav>
                     </div>
                 </div>
             </header>
-            {/* Spacer for fixed header */}
+
             <div className="h-16"></div>
         </>
     );
