@@ -4,41 +4,46 @@ import { useState, useEffect } from "react";
 export const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
+    const [user, setUser] = useState(null);
+
     const navigate = useNavigate();
     const location = useLocation();
 
     const isAuthRoute = ["/login", "/signup", "/forget-password"].includes(location.pathname);
 
-    const user = (() => {
-        try {
-            return JSON.parse(localStorage.getItem("auth_user"));
-        } catch {
-            return null;
-        }
-    })();
-
     useEffect(() => {
-        const handleScroll = () => {
-            setScrolled(window.scrollY > 10);
-        };
+        const handleScroll = () => setScrolled(window.scrollY > 10);
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (isMenuOpen && !event.target.closest('.mobile-menu-container')) {
+            if (isMenuOpen && !event.target.closest(".mobile-menu-container")) {
                 setIsMenuOpen(false);
             }
         };
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => document.removeEventListener('mousedown', handleClickOutside);
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
     }, [isMenuOpen]);
 
+    useEffect(() => {
+        try {
+            const stored = localStorage.getItem("auth_user");
+            const parsed = stored ? JSON.parse(stored) : null;
+            setUser(parsed);
+        } catch {
+            localStorage.removeItem("auth_user");
+            localStorage.removeItem("auth_token");
+            setUser(null);
+        }
+    }, [location.pathname]);
+
     const handleLogout = () => {
-        localStorage.removeItem('auth_token');
-        localStorage.removeItem('auth_user');
-        navigate('/login');
+        localStorage.removeItem("auth_token");
+        localStorage.removeItem("auth_user");
+        setUser(null);
+        navigate("/login");
     };
 
     const navLinks = [
@@ -60,7 +65,6 @@ export const Navbar = () => {
                                 Royal <span className="text-teal-600">Fitness</span>
                             </h2>
                         </Link>
-
 
                         <nav className="hidden md:block" aria-label="Global">
                             <ul className="flex items-center gap-6 text-sm">
@@ -92,9 +96,12 @@ export const Navbar = () => {
                                                     Dashboard
                                                 </Link>
                                             )}
-                                            <span className="text-gray-800 text-sm font-medium hidden lg:block">
+                                            <Link
+                                                to="/profile"
+                                                className="text-gray-700 hover:text-teal-600 text-sm font-medium hidden lg:block"
+                                            >
                                                 Hello, {user.first_name}
-                                            </span>
+                                            </Link>
                                             <button
                                                 onClick={handleLogout}
                                                 className="cursor-pointer bg-red-500 hover:bg-red-600 text-white px-3 py-1.5 text-sm rounded-3xl transition"
@@ -103,20 +110,12 @@ export const Navbar = () => {
                                             </button>
                                         </div>
                                     ) : (
-                                        <>
-                                            <Link
-                                                to="/login"
-                                                className="bg-teal-500 hover:bg-teal-600 text-white px-5 py-2.5 text-sm rounded-3xl transition"
-                                            >
-                                                Login
-                                            </Link>
-                                            {/* <Link
-                                                to="/signup"
-                                                className="bg-gray-100 hover:bg-gray-200 text-teal-700 px-5 py-2.5 text-sm rounded-3xl transition border border-teal-500"
-                                            >
-                                                Sign Up
-                                            </Link> */}
-                                        </>
+                                        <Link
+                                            to="/login"
+                                            className="bg-teal-500 hover:bg-teal-600 text-white px-5 py-2.5 text-sm rounded-3xl transition"
+                                        >
+                                            Login
+                                        </Link>
                                     )}
                                 </div>
                             )}
@@ -132,54 +131,21 @@ export const Navbar = () => {
                         </div>
                     </div>
 
+                    {/* Mobile Menu */}
                     <div className={`md:hidden mobile-menu-container ${isMenuOpen ? 'block' : 'hidden'} absolute left-0 right-0 top-16 bg-white shadow-lg z-50`}>
                         <nav className="px-4 py-3">
                             <ul className="space-y-3">
-                                <li>
-                                    <Link
-                                        to="/"
-                                        className="block text-gray-700 hover:text-teal-500 transition"
-                                        onClick={() => setIsMenuOpen(false)}
-                                    >
-                                        Home
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        to="/courses"
-                                        className="block text-gray-700 hover:text-teal-500 transition"
-                                        onClick={() => setIsMenuOpen(false)}
-                                    >
-                                        Courses
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        to="/store"
-                                        className="block text-gray-700 hover:text-teal-500 transition"
-                                        onClick={() => setIsMenuOpen(false)}
-                                    >
-                                        Store
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        to="/services"
-                                        className="block text-gray-700 hover:text-teal-500 transition"
-                                        onClick={() => setIsMenuOpen(false)}
-                                    >
-                                        Services
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        to="/aboutus"
-                                        className="block text-gray-700 hover:text-teal-500 transition"
-                                        onClick={() => setIsMenuOpen(false)}
-                                    >
-                                        About Us
-                                    </Link>
-                                </li>
+                                {navLinks.map(link => (
+                                    <li key={link.to}>
+                                        <Link
+                                            to={link.to}
+                                            className="block text-gray-700 hover:text-teal-500 transition"
+                                            onClick={() => setIsMenuOpen(false)}
+                                        >
+                                            {link.label}
+                                        </Link>
+                                    </li>
+                                ))}
                             </ul>
 
                             {!isAuthRoute && (
@@ -203,7 +169,13 @@ export const Navbar = () => {
                                                     Dashboard
                                                 </Link>
                                             )}
-                                            <span className="text-sm text-gray-700">Hello, {user.first_name}</span>
+                                            <Link
+                                                to="/profile"
+                                                className="text-sm text-gray-700"
+                                                onClick={() => setIsMenuOpen(false)}
+                                            >
+                                                Hello, {user.first_name}
+                                            </Link>
                                             <button
                                                 onClick={() => { setIsMenuOpen(false); handleLogout(); }}
                                                 className="bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded-3xl text-sm"

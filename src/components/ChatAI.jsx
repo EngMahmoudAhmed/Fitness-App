@@ -45,7 +45,7 @@ export default function ChatAI() {
     setLoading(true);
 
     try {
-      const res = await axios.post('https://urchin-app-2qxwc.ondigitalocean.app/api/proxy/ask', {
+      const res = await axios.post('https://shark-app-on96m.ondigitalocean.app/api/proxy/ask', {
         question: userMessage
       });
 

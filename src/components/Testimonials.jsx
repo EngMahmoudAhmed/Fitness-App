@@ -6,7 +6,7 @@ const Testimonials = () => {
     // const [testimonials, setTestimonials] = useState([]);
 
     // useEffect(() => {
-    //     axios.get('https://urchin-app-2qxwc.ondigitalocean.app/api/testimonials')
+    //     axios.get('https://shark-app-on96m.ondigitalocean.app/api/testimonials')
     //         .then(response => setTestimonials(response.data))
     //         .catch(error => console.error(error));
     // }, []);

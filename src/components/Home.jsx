@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import hero from '../assets/hero.png';
 import { Link } from 'react-router-dom';
 import Features from './Features';
@@ -7,7 +8,30 @@ import Pricing from './Pricing';
 import Contact from './Contact';
 
 const Home = () => {
-    const isLoggedIn = !!localStorage.getItem('auth_token'); 
+    const isLoggedIn = !!localStorage.getItem('auth_token');
+    const [plans, setPlans] = useState([]);
+
+    useEffect(() => {
+        axios.get('https://shark-app-on96m.ondigitalocean.app/api/plans')
+            .then(res => {
+                const formattedPlans = res.data.map(plan => {
+                    let features = plan.features;
+                    if (typeof features === 'string') {
+                        try {
+                            features = JSON.parse(features);
+                        } catch {
+                            features = [features];
+                        }
+                    }
+                    return { ...plan, features };
+                });
+                setPlans(formattedPlans);
+            })
+            .catch(err => {
+                console.error('Failed to fetch plans:', err);
+            });
+    }, []);
+
     return (
         <div className="bg-black">
             <section className="flex flex-col md:flex-row items-center justify-center min-h-screen px-4 py-8 md:py-0">
@@ -34,7 +58,7 @@ const Home = () => {
             </section>
             <Features />
             <Testimonials />
-            <Pricing />
+            <Pricing plans={plans} />
             <Contact />
         </div>
     );

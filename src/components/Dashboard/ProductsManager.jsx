@@ -12,7 +12,7 @@ const ProductsManagement = () => {
 
     const fetchProducts = async () => {
         try {
-            const res = await axios.get('https://urchin-app-2qxwc.ondigitalocean.app/api/products');
+            const res = await axios.get('https://shark-app-on96m.ondigitalocean.app/api/products');
             setProducts(res.data);
         } catch (err) {
             setError('Failed to load products.');
@@ -29,7 +29,7 @@ const ProductsManagement = () => {
         if (!window.confirm('Are you sure you want to delete this product?')) return;
 
         try {
-            await axios.delete(`https://urchin-app-2qxwc.ondigitalocean.app/api/products/${id}`);
+            await axios.delete(`https://shark-app-on96m.ondigitalocean.app/api/products/${id}`);
             setProducts(prev => prev.filter(p => p.id !== id));
         } catch (err) {
             alert('Failed to delete product.');
@@ -50,12 +50,12 @@ const ProductsManagement = () => {
         try {
             if (editingProduct) {
                 // تعديل
-                await axios.post(`https://urchin-app-2qxwc.ondigitalocean.app/api/products/${editingProduct.id}`, formData, {
+                await axios.post(`https://shark-app-on96m.ondigitalocean.app/api/products/${editingProduct.id}`, formData, {
                     headers: { 'Content-Type': 'multipart/form-data' },
                 });
             } else {
                 // إضافة
-                await axios.post('https://urchin-app-2qxwc.ondigitalocean.app/api/products', formData, {
+                await axios.post('https://shark-app-on96m.ondigitalocean.app/api/products', formData, {
                     headers: { 'Content-Type': 'multipart/form-data' },
                 });
             }

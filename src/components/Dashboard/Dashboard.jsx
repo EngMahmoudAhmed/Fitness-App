@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { BarChart3, Activity, Users, DollarSign, TrendingUp, Calendar, Settings, Bell, Box, FileText } from 'lucide-react';
+import { BarChart3, Activity, Users, DollarSign, TrendingUp, Calendar, Settings, Bell, Box } from 'lucide-react';
 
 import ProductsManager from './ProductsManager';
-
+import UsersManager from './UsersManager'; // تم إضافته
 
 const Dashboard = () => {
     const [activeTab, setActiveTab] = useState('overview');
@@ -30,24 +30,21 @@ const Dashboard = () => {
                 <nav className="flex flex-col gap-3">
                     <button
                         onClick={() => setActiveTab('overview')}
-                        className={`cursor-pointer flex items-center gap-2 p-2 rounded hover:bg-teal-600 transition ${activeTab === 'overview' ? 'bg-gray-300 font-semibold' : ''
-                            }`}
+                        className={`cursor-pointer flex items-center gap-2 p-2 rounded hover:bg-teal-600 transition ${activeTab === 'overview' ? 'bg-gray-300 font-semibold' : ''}`}
                     >
                         <BarChart3 className="w-5 h-5" /> نظرة عامة
                     </button>
                     <button
                         onClick={() => setActiveTab('products')}
-                        className={`cursor-pointer flex items-center gap-2 p-2 rounded hover:bg-teal-600 transition ${activeTab === 'products' ? 'bg-gray-300 font-semibold' : ''
-                            }`}
+                        className={`cursor-pointer flex items-center gap-2 p-2 rounded hover:bg-teal-600 transition ${activeTab === 'products' ? 'bg-gray-300 font-semibold' : ''}`}
                     >
                         <Box className="w-5 h-5" /> إدارة المنتجات
                     </button>
                     <button
-                        onClick={() => setActiveTab('orders')}
-                        className={`cursor-pointer flex items-center gap-2 p-2 rounded hover:bg-teal-600 transition ${activeTab === 'orders' ? 'bg-gray-300 font-semibold' : ''
-                            }`}
+                        onClick={() => setActiveTab('users')}
+                        className={`cursor-pointer flex items-center gap-2 p-2 rounded hover:bg-teal-600 transition ${activeTab === 'users' ? 'bg-gray-300 font-semibold' : ''}`}
                     >
-                        <FileText className="w-5 h-5" /> إدارة الطلبات
+                        <Users className="w-5 h-5" /> إدارة المستخدمين
                     </button>
                 </nav>
             </aside>
@@ -141,12 +138,8 @@ const Dashboard = () => {
                         </div>
                     </div>
                 )}
-                {activeTab === 'products' && (
-                    <ProductsManager />
-                )}
-                {activeTab === 'orders' && (
-                    <OrdersManager />
-                )}
+                {activeTab === 'products' && <ProductsManager />}
+                {activeTab === 'users' && <UsersManager />}
             </main>
         </div>
     );

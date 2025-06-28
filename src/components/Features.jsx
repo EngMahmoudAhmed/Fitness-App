@@ -13,7 +13,7 @@ const Features = () => {
     // const [features, setFeatures] = useState([]);
 
     // useEffect(() => {
-    //     axios.get('https://urchin-app-2qxwc.ondigitalocean.app/api/features')
+    //     axios.get('https://shark-app-on96m.ondigitalocean.app/api/features')
     //         .then(res => setFeatures(res.data))
     //         .catch(err => console.error(err));
     // }, []);

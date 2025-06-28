@@ -110,13 +110,13 @@ const ProductFormModal = ({ isOpen, onClose, onSave, product }) => {
                         <button
                             type="button"
                             onClick={onClose}
-                            className="cursor-pointer px-4 py-2 border rounded hover:bg-teal-700 transition"
+                            className="px-4 py-2 border rounded hover:bg-gray-100"
                         >
                             Cancel
                         </button>
                         <button
                             type="submit"
-                            className="cursor-pointer px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700"
+                            className="px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700"
                         >
                             {product ? 'Update' : 'Add'}
                         </button>
@@ -132,9 +132,9 @@ export default ProductFormModal;
 export const saveProduct = async (formData, productId) => {
     try {
         if (productId) {
-            formData.append('_method', 'PUT');
+            formData.append('_method', 'PUT'); 
             const response = await axios.post(
-                `https://urchin-app-2qxwc.ondigitalocean./products${productId}`,
+                `https://shark-app-on96m.ondigitalocean.app/api/products/${productId}`,
                 formData,
                 {
                     headers: {

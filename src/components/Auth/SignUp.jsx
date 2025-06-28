@@ -14,7 +14,7 @@ export const SignUp = () => {
   const onSubmit = async (data) => {
     setIsLoading(true);
     try {
-      const response = await fetch('https://urchin-app-2qxwc.ondigitalocean.app/api/register', {
+      const response = await fetch('https://shark-app-on96m.ondigitalocean.app/api/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

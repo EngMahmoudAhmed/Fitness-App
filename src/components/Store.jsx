@@ -9,7 +9,7 @@ const Store = () => {
     const [products, setProducts] = useState([])
 
     useEffect(() => {
-        axios.get('https://urchin-app-2qxwc.ondigitalocean.app/api/products')
+        axios.get('https://shark-app-on96m.ondigitalocean.app/api/products')
             .then(res => {
                 setProducts(res.data)
             })

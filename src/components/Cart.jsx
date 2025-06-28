@@ -1,22 +1,24 @@
-// import { useState } from 'react';
 import { X, Plus, Minus, ShoppingCart } from 'lucide-react';
 import axios from 'axios';
 import { useState } from 'react';
 
 const Cart = ({ isOpen, onClose, cartItems, setCartItems }) => {
-    const [loading , setLoading] = useState()
+    const [loading, setLoading] = useState(false);
+
     const removeFromCart = (productId) => {
         setCartItems(prev => prev.filter(item => item.id !== productId));
     };
 
     const updateQuantity = (productId, delta) => {
-        setCartItems(prev => prev.map(item => {
-            if (item.id === productId) {
-                const newQuantity = item.quantity + delta;
-                return newQuantity > 0 ? { ...item, quantity: newQuantity } : item;
-            }
-            return item;
-        }));
+        setCartItems(prev =>
+            prev.map(item => {
+                if (item.id === productId) {
+                    const newQuantity = item.quantity + delta;
+                    return newQuantity > 0 ? { ...item, quantity: newQuantity } : item;
+                }
+                return item;
+            })
+        );
     };
 
     const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -24,7 +26,7 @@ const Cart = ({ isOpen, onClose, cartItems, setCartItems }) => {
     const handleCheckout = async () => {
         setLoading(true);
         try {
-            await axios.post('https://urchin-app-2qxwc.ondigitalocean.app/api/orders', {
+            await axios.post('https://shark-app-on96m.ondigitalocean.app/api/orders', {
                 items: cartItems,
                 total: total.toFixed(2)
             });
@@ -45,6 +47,7 @@ const Cart = ({ isOpen, onClose, cartItems, setCartItems }) => {
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-end">
             <div className="bg-white w-full max-w-md h-full flex flex-col">
+                {/* Header */}
                 <div className="flex justify-between items-center p-4 border-b">
                     <div className="flex items-center gap-2">
                         <ShoppingCart className="w-6 h-6 text-teal-600" />
@@ -58,12 +61,16 @@ const Cart = ({ isOpen, onClose, cartItems, setCartItems }) => {
                     </button>
                 </div>
 
+                {/* Items */}
                 <div className="flex-1 overflow-y-auto p-4 space-y-4">
                     {cartItems.length === 0 ? (
                         <p className="text-center text-gray-500">Your cart is empty</p>
                     ) : (
                         cartItems.map(item => (
-                            <div key={item.id} className="flex items-center gap-4 bg-gray-50 p-4 rounded-lg">
+                            <div
+                                key={item.id}
+                                className="flex items-center gap-4 bg-gray-50 p-4 rounded-lg"
+                            >
                                 <img
                                     src={item.image}
                                     alt={item.name}
@@ -100,14 +107,18 @@ const Cart = ({ isOpen, onClose, cartItems, setCartItems }) => {
                     )}
                 </div>
 
+                {/* Footer */}
                 <div className="border-t p-4 space-y-4">
                     <div className="flex justify-between items-center">
                         <span className="text-lg font-semibold">Total:</span>
-                        <span className="text-xl font-bold text-teal-600">${total.toFixed(2)}</span>
+                        <span className="text-xl font-bold text-teal-600">
+                            ${total.toFixed(2)}
+                        </span>
                     </div>
                     <button
+                        onClick={handleCheckout}
                         className="w-full bg-teal-600 text-white py-3 rounded-lg font-medium hover:bg-teal-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                        disabled={cartItems.length === 0}
+                        disabled={cartItems.length === 0 || loading}
                     >
                         {loading ? 'Processing...' : `Checkout ($${total.toFixed(2)})`}
                     </button>
