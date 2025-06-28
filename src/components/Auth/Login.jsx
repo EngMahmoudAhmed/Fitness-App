@@ -2,7 +2,9 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { Mail, Lock, Loader2 } from 'lucide-react'
+import { toast } from 'react-toastify'
 import axios from 'axios'
+
 
 export const Login = () => {
     const [isLoading, setIsLoading] = useState(false)
@@ -27,10 +29,13 @@ export const Login = () => {
             } else {
                 navigate('/')
             }
+            toast.success('تم تسجيل الدخول بنجاح')
 
         } catch (error) {
+            toast.error('حدث خطأ أثناء تسجييل الدخول')
             console.error('Login error:', error.response?.data)
-            alert(error.response?.data?.message || 'Login failed')
+            
+            // alert(error.response?.data?.message || 'Login failed')
         } finally {
             setIsLoading(false)
         }

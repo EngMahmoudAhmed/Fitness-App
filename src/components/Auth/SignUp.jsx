@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import {toast} from 'react-toastify'
 import { User, Mail, Lock, Loader2 } from 'lucide-react';
 
 export const SignUp = () => {
@@ -35,14 +36,17 @@ export const SignUp = () => {
           ? Object.values(result.errors).flat().join('\n')
           : result.message || 'Signup failed';
         alert(errorMessages);
+
         return;
       }
 
 
-      alert('Account created successfully!');
+      // alert('Account created successfully!');
+      toast.success('تم تسجيل الدخول بنجاح')
     } catch (error) {
       console.error('Signup error:', error);
-      alert('Something went wrong. Please try again.');
+      // alert('Something went wrong. Please try again.');
+      toast.error('حدث خطأ أثناء تسجييل الدخول')
     } finally {
       setIsLoading(false);
     }

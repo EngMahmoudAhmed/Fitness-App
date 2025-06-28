@@ -1,6 +1,7 @@
 import { X, Plus, Minus, ShoppingCart } from 'lucide-react';
 import axios from 'axios';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 const Cart = ({ isOpen, onClose, cartItems, setCartItems }) => {
     const [loading, setLoading] = useState(false);
@@ -31,12 +32,14 @@ const Cart = ({ isOpen, onClose, cartItems, setCartItems }) => {
                 total: total.toFixed(2)
             });
 
-            alert('Order placed successfully!');
+            // alert('Order placed successfully!');
+            toast.success('Order placed successfully!')
             setCartItems([]);
             onClose();
         } catch (error) {
             console.error('Checkout failed:', error);
-            alert('Failed to place order.');
+            // alert('Failed to place order.');
+            toast.error('Failed to place order.')
         } finally {
             setLoading(false);
         }
